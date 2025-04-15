@@ -1530,7 +1530,7 @@ void ScrollerLayout::swipe_update(SCallbackInfo &info,
         }
       }
     }
-    if (**WENABLE && swipe_event.fingers == **WFINGERS) {
+    if (**WENABLE && swipe_event.fingers == **SFINGERS) {
       // Only accept the first update: one swipe, one trigger.
       if (swipe_active)
         return;
