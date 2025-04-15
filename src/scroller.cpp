@@ -1502,24 +1502,25 @@ void ScrollerLayout::swipe_update(SCallbackInfo &info,
   if (**SENABLE && swipe_event.fingers == **SFINGERS) {
     if (s == nullptr)
       return;
-    if (std::abs(gesture_delta.x) > std::abs(gesture_delta.y))
+    if (std::abs(gesture_delta.x) > std::abs(gesture_delta.y)) {
       swipe_direction =
           gesture_delta.x > 0 ? Direction::Right : Direction::Left;
-    else
+      s->scroll_update(swipe_direction, delta);
+    } else {
       // swipe_direction = gesture_delta.y > 0 ? Direction::Down :
       // Direction::Up;
       if (swipe_active)
         return;
-    if (gesture_delta.y <= -**WDISTANCE) {
-      std::string offset(*WPREFIX);
-      g_pKeybindManager->m_mDispatchers["workspace"](
-          **HSINVERT ? offset + "+1" : offset + "-1");
-    } else if (gesture_delta.y >= **WDISTANCE) {
-      std::string offset(*WPREFIX);
-      g_pKeybindManager->m_mDispatchers["workspace"](
-          **HSINVERT ? offset + "-1" : offset + "+1");
+      if (gesture_delta.y <= -**WDISTANCE) {
+        std::string offset(*WPREFIX);
+        g_pKeybindManager->m_mDispatchers["workspace"](
+            **HSINVERT ? offset + "+1" : offset + "-1");
+      } else if (gesture_delta.y >= **WDISTANCE) {
+        std::string offset(*WPREFIX);
+        g_pKeybindManager->m_mDispatchers["workspace"](
+            **HSINVERT ? offset + "-1" : offset + "+1");
+      }
     }
-    s->scroll_update(swipe_direction, delta);
   } else {
     // Undo natural
     const Vector2D delta = gesture_delta * (**NATURAL ? -1.0 : 1.0);
