@@ -1505,21 +1505,8 @@ void ScrollerLayout::swipe_update(SCallbackInfo &info,
     if (std::abs(gesture_delta.x) > std::abs(gesture_delta.y))
       swipe_direction =
           gesture_delta.x > 0 ? Direction::Right : Direction::Left;
-    else {
-
-      if (delta.y <= -**WDISTANCE) {
-        std::string offset(*WPREFIX);
-        g_pKeybindManager->m_mDispatchers["workspace"](
-            **HSINVERT ? offset + "+1" : offset + "-1");
-      } else if (delta.y >= **WDISTANCE) {
-        std::string offset(*WPREFIX);
-        g_pKeybindManager->m_mDispatchers["workspace"](
-            **HSINVERT ? offset + "-1" : offset + "+1");
-      } else {
-
-        swipe_direction = gesture_delta.y > 0 ? Direction::Down : Direction::Up;
-      }
-    }
+    else
+      swipe_direction = gesture_delta.y > 0 ? Direction::Down : Direction::Up;
     s->scroll_update(swipe_direction, delta);
   } else {
     // Undo natural
@@ -1528,13 +1515,13 @@ void ScrollerLayout::swipe_update(SCallbackInfo &info,
       // Only accept the first update: one swipe, one trigger.
       if (swipe_active)
         return;
-      if (delta.y <= -**ODISTANCE) {
+      if (delta.x <= -**ODISTANCE) {
         if (s == nullptr)
           return;
         if (!s->is_overview()) {
           s->toggle_overview();
         }
-      } else if (delta.y >= **ODISTANCE) {
+      } else if (delta.x >= **ODISTANCE) {
         if (s == nullptr)
           return;
         if (s->is_overview()) {
@@ -1546,11 +1533,11 @@ void ScrollerLayout::swipe_update(SCallbackInfo &info,
       // Only accept the first update: one swipe, one trigger.
       if (swipe_active)
         return;
-      if (delta.x <= -**WDISTANCE) {
+      if (delta.y <= -**WDISTANCE) {
         std::string offset(*WPREFIX);
         g_pKeybindManager->m_mDispatchers["workspace"](
             **HSINVERT ? offset + "+1" : offset + "-1");
-      } else if (delta.x >= **WDISTANCE) {
+      } else if (delta.y >= **WDISTANCE) {
         std::string offset(*WPREFIX);
         g_pKeybindManager->m_mDispatchers["workspace"](
             **HSINVERT ? offset + "-1" : offset + "+1");
