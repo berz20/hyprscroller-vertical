@@ -1505,8 +1505,9 @@ void ScrollerLayout::swipe_update(SCallbackInfo &info,
     if (std::abs(gesture_delta.x) > std::abs(gesture_delta.y))
       swipe_direction =
           gesture_delta.x > 0 ? Direction::Right : Direction::Left;
-    else
-      swipe_direction = gesture_delta.y > 0 ? Direction::Down : Direction::Up;
+    // else
+    //   swipe_direction = gesture_delta.y > 0 ? Direction::Down :
+    //   Direction::Up;
     s->scroll_update(swipe_direction, delta);
   } else {
     // Undo natural
